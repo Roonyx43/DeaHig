@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px); /* Começa 30px abaixo */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Vai para a posição original */
+    }
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh; /* Permite que o body cresça conforme o conteúdo */
+    background-image: url(/assets/others/background.jpg);
+    background-size: cover;
+    background-color: lightgray;
+    background-attachment: fixed;
+}
+
+h1, h2 {
+    text-align: center;
+    color: rgb(10, 93, 167); /* Cor harmonizada com a paleta de cores */
+}
+
+h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f6f6f6;
+    padding: 15px 15px;
+    width: 100%;
+    float: left;
+}
+
+img{
+    width: 100%;
+}
+
+#logo{
+    width: 4%;
+}
+
+header {
+    display: flex;
+    font-family: verdana;
+    background-color: white;
+    color: rgb(23, 172, 138);
+    text-align: center;
+    padding-bottom: 5px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 4px 0 black;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-top: 70px;
+    margin-bottom: 70px;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 80%;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px 0px black;
+    padding: 25px;
+}
+
+.hidden{
+    display: none;
+}
+
+#adicionar-produto {
+    padding: 10px 15px;
+    border: none;
+    background-color: #404040;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#produto-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.imagem-produto{
+    opacity: 0;
+    animation: fadeIn 3s ease-in-out forwards;
+}
+
+.codigo-produto{
+    width: 100%;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    background-color: #e0d8d8;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 2px solid rgb(10, 93, 167);
+    outline: none;
+}
+
+.codigo-produto:focus::placeholder {
+    color: transparent; /* Faz o placeholder sumir ao focar */
+}
+
+#generate-pdf{
+
+    padding: 15px 20px;
+    width: 30%;
+    border: none;
+    background-color: rgb(10, 93, 167);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+@media (max-width: 999px) {
+    img {
+        width: 8%;
+    }
+}
