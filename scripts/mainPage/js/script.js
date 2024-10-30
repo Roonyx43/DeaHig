@@ -177,6 +177,8 @@ document.getElementById("generate-pdf").addEventListener("click", async function
         for (let i = 0; i < maxImagesPerPage; i++) {
             if (currentImage >= produtosData.length) break;
 
+
+            const tecnico = document.getElementById('consultor-tecnico').value
             const produtoData = produtosData[currentImage];
             const imageFormat = detectImageFormat(produtoData.caminhoImagem);
             const imageBytes = await loadImageBytes(produtoData.caminhoImagem);
@@ -211,8 +213,9 @@ document.getElementById("generate-pdf").addEventListener("click", async function
                 lineYOffset -= 30; // Ajusta para a próxima linha
             }
 
-            currentPage.drawText(`${produtoData.finalidade}`, { x: 1400, y: lineYOffset + 565, size: textFontSize, color: rgb(1, 1, 1) });
-            currentPage.drawText(`${produtoData.ident}`, { x: 90, y: lineYOffset + 330, size: textFontSize, color: rgb(1, 1, 1) });
+            currentPage.drawText(`${produtoData.finalidade}`, { x: 1400, y: 2945, size: textFontSize, color: rgb(1, 1, 1) });
+            currentPage.drawText(`${produtoData.ident}`, { x: 90, y: 2710, size: textFontSize, color: rgb(1, 1, 1) });
+            currentPage.drawText(`Consultor Técnico: ${tecnico}`, { x: 1500, y: 100, size: 56, color: rgb(1, 1, 1) });
 
             currentImage++;
         }
