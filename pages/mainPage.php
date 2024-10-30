@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="/styles/mainPage/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <link rel="shortcut icon" href="/assets/others/logo.ico" type="image/x-icon">
 </head>
 <body>
     <header>
@@ -18,6 +19,11 @@
             <h1>Plano de Higiene</h1>
 
             
+
+            <div class="consultor">
+                <label for="consultor-tecnico">Consultor Técnico:</label>
+                <input type="text" id="consultor-tecnico">
+            </div>
 
             <!-- Campo para upload de imagem com visualização -->
             <div class="image-upload">
