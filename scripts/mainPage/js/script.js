@@ -6,9 +6,9 @@ document.getElementById('adicionar-produto').addEventListener('click', function(
         <input type="text" class="codigo-produto" placeholder="Código do Produto">
         <div class="dilution-container">
             <img src="" alt="Imagem do Produto" class="imagem-produto hidden">
-            <textarea class="dilution-input hidden" placeholder="Digite a diluição"></textarea>
-            <textarea class="finalidade-input hidden" placeholder="Digite a finalidade"></textarea>
-            <textarea class="ident-input hidden" placeholder="ID"></textarea>
+            <textarea class="dilution-input hidden" placeholder="" maxlength="3"></textarea>
+            <textarea class="finalidade-input hidden" placeholder="Digite a finalidade" maxlength="50"></textarea>
+            <textarea class="ident-input hidden" placeholder="ID" maxlength="2"></textarea>
         </div>
     `;
     document.getElementById('produto-container').appendChild(div);
@@ -65,7 +65,6 @@ document.getElementById('remover-ultimo-produto').addEventListener('click', func
     }
 });
 
-
 document.getElementById("generate-pdf").addEventListener("click", async function () {
     const { PDFDocument, rgb } = PDFLib;
 
@@ -113,8 +112,52 @@ document.getElementById("generate-pdf").addEventListener("click", async function
         return;
     }
 
+    const tecnico = document.getElementById('consultor-tecnico').value;
+    let backgroundPath;
+
+    // Define o caminho do background com base no técnico selecionado
+    switch (tecnico) {
+        case 'Cezar Petry':
+            backgroundPath = '/assets/vendedores/01 - Cezar Petry.png';
+            break;
+        case 'Sérgio Marciano':
+            backgroundPath = '/assets/vendedores/02 - Sérgio Marciano.png';
+            break;
+        case 'Rodrigo Pelegrino':
+            backgroundPath = '/assets/vendedores/03 - Rodrigo Pelegrino.png';
+            break;
+        case 'Edimar Luchtemberg':
+            backgroundPath = '/assets/vendedores/04 - Edimar Luchtemberg.png';
+            break;
+        case 'Dionisio Ferreira':
+            backgroundPath = '/assets/vendedores/05 - Dionízio Ferreira.png';
+            break;
+        case 'José Neto - FOZ':
+            backgroundPath = '/assets/vendedores/06 - José Neto - FOZ.png';
+            break;
+        case 'Cristian':
+            backgroundPath = '/assets/vendedores/07 - Cristian.png';
+            break;
+        case 'José Neto':
+            backgroundPath = '/assets/vendedores/08 - José Neto.png';
+            break;
+        case 'Sergio Deodato':
+            backgroundPath = '/assets/vendedores/09 - Sergio Deodato.png';
+            break;
+        case 'Eduardo Souza':
+            backgroundPath = '/assets/vendedores/10 - Eduardo Souza.png';
+            break;
+        case 'Elton Rohling':
+            backgroundPath = '/assets/vendedores/11 - Elton Rohling.png';
+            break;
+        default:
+            // Se nenhum técnico for selecionado, usa o modelo padrão
+            backgroundPath = '/assets/vendedores/modelo_background.png';
+    }
+
+    // Carregue o background escolhido
+    const backgroundImageBytes = await loadImageBytes(backgroundPath);
     const pdfDoc = await PDFDocument.create();
-    const backgroundImageBytes = await loadImageBytes('/assets/produtos/modelo_background.png');
     const backgroundImage = await pdfDoc.embedPng(backgroundImageBytes);
 
     const pageWidth = backgroundImage.width;
@@ -178,7 +221,7 @@ document.getElementById("generate-pdf").addEventListener("click", async function
             if (currentImage >= produtosData.length) break;
 
 
-            const tecnico = document.getElementById('consultor-tecnico').value
+            const empresa = document.getElementById('empresa').value
             const produtoData = produtosData[currentImage];
             const imageFormat = detectImageFormat(produtoData.caminhoImagem);
             const imageBytes = await loadImageBytes(produtoData.caminhoImagem);
@@ -204,29 +247,71 @@ document.getElementById("generate-pdf").addEventListener("click", async function
             const textYOffset = y - 20;
 
 
-            // Quebra o texto da diluição em várias linhas
-            const maxTextWidth = pageWidth - 1770;
-            const diluicaoLines = wrapText(`${produtoData.diluicao}`, maxTextWidth, textFontSize);
-            let lineYOffset = textYOffset - 15;
+            const maxTextWidthDiluicao = pageWidth - 1770;
+            const diluicaoText = `${produtoData.diluicao}`;
+            const diluicaoLines = wrapText(diluicaoText, maxTextWidthDiluicao, textFontSize);
+            
+            let diluicaoLineYOffset = textYOffset - 15;
+            
+            // Ajuste dinâmico da posição X com base no comprimento do texto
+            let diluicaoXOffset;
+            if (diluicaoText.length == 2) {
+                diluicaoXOffset = 1065; // Mais centralizado para números pequenos
+            } else if (diluicaoText.length == 3) {
+                diluicaoXOffset = 1054; // Posição padrão para 3 dígitos
+            } else if (diluicaoText.length == 1) {
+                diluicaoXOffset = 1075;
+            }             
+            else {
+                diluicaoXOffset = 1045; // Para textos maiores, ajusta para a esquerda
+            }
+            
+            // Ajuste o espaçamento entre linhas dinamicamente, se necessário
+            let lineSpacing = diluicaoText.length <= 3 ? 30 : 25; // Ajusta o espaçamento se o texto for curto ou longo
+            
             for (const line of diluicaoLines) {
-                currentPage.drawText(line, { x: 965, y: lineYOffset + 300, size: textFontSize, color: rgb(0, 0, 0) });
-                lineYOffset -= 30; // Ajusta para a próxima linha
+                currentPage.drawText(line, {
+                    x: diluicaoXOffset,
+                    y: diluicaoLineYOffset + 205,
+                    size: textFontSize,
+                    color: rgb(0, 0, 0),
+                });
+                diluicaoLineYOffset -= lineSpacing; // Ajusta para a próxima linha
             }
 
-            currentPage.drawText(`${produtoData.finalidade}`, { x: 1400, y: 2945, size: textFontSize, color: rgb(1, 1, 1) });
-            currentPage.drawText(`${produtoData.ident}`, { x: 90, y: 2710, size: textFontSize, color: rgb(1, 1, 1) });
-            currentPage.drawText(`Consultor Técnico: ${tecnico}`, { x: 1500, y: 100, size: 56, color: rgb(1, 1, 1) });
+            // Quebra o texto da finalidade em várias linhas
+            const finalidadeLines = wrapText(`${produtoData.finalidade}`, textFontSize);
+            let finalidadeLineYOffset = textYOffset - 60; // Ajuste a posição inicial se necessário
+
+            for (const line of finalidadeLines) {
+                currentPage.drawText(line, { x: 1500, y: finalidadeLineYOffset + 520, size: textFontSize + 4, color: rgb(1, 1, 1) });
+                finalidadeLineYOffset -= 80; // Ajusta para a próxima linha
+            }
+
+            // Quebra o texto do ident em várias linhas
+            const maxTextWidthIdent = pageWidth - 1770;
+            const identLines = wrapText(`${produtoData.ident}`, maxTextWidthIdent, textFontSize);
+            let identLineYOffset = textYOffset - 105; // Ajuste a posição inicial se necessário
+
+            for (const line of identLines) {
+                currentPage.drawText(line, { x: 90, y: identLineYOffset + 325, size: textFontSize + 12, color: rgb(1, 1, 1) });
+                identLineYOffset -= 30; // Ajusta para a próxima linha
+            }
+
+            currentPage.drawText(`${empresa}`, { x: 50, y: 10, size: 42, color: rgb(0, 0, 0) });
 
             currentImage++;
         }
     }
 
+    const cliente = document.getElementById('empresa').value
+    const vendedor = document.getElementById('consultor-tecnico').value
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "documento_com_imagens.pdf";
+    link.download = `${cliente} (${vendedor}).pdf`; 
     link.click();
     URL.revokeObjectURL(url);
 });
