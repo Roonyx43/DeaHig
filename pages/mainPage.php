@@ -18,11 +18,27 @@
         <div class="container">
             <h1>Plano de Higiene</h1>
 
-            
+            <div class="consultor">
+                <label for="empresa">Cliente:</label>
+                <input type="text" class="empresa" id="empresa">
+            </div>
 
             <div class="consultor">
                 <label for="consultor-tecnico">Consultor Técnico:</label>
-                <input type="text" id="consultor-tecnico">
+                <select id="consultor-tecnico">
+                    <option value=""></option>
+                    <option value="Eduardo Souza">Eduardo</option>
+                    <option value="Elton Rohling">Elton</option>
+                    <option value="Sergio Deodato">Deodato</option>
+                    <option value="Cristian">Cristian</option>
+                    <option value="Dionisio Ferreira">Dionisio</option>
+                    <option value="Edimar Luchtemberg">Edimar</option>
+                    <option value="Rodrigo Pelegrino">Rodrigo</option>
+                    <option value="Sérgio Marciano">Sérgio</option>
+                    <option value="Cezar Petry">Cezar</option>
+                    <option value="José Neto">Neto - CWB</option>
+                    <option value="José Neto - FOZ">Neto - Foz</option>
+                </select>
             </div>
 
             <!-- Campo para upload de imagem com visualização -->
@@ -32,6 +48,7 @@
                 <div class="image-preview" id="image-preview">
                     <p>Selecione a logo do cliente</p>
                 </div>
+                <span class="tooltip">ATENÇÃO! Somente arquivos PNG</span>
             </div>
 
 
@@ -51,10 +68,10 @@
             <hr>
 
             <!-- Botão para gerar PDF -->
-            <button id="generate-pdf">Gerar PDF</button>
+            <button type="submit" id="generate-pdf">Gerar PDF</button>
         </div>
     </main>
 
-    <script src="/scripts/mainPage/js/script.js"></script>
+    <script src="/scripts/mainPage/js/script.js" type="module"></script>
 </body>
 </html>
