@@ -2,6 +2,21 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap');
 
+@import url(/assets/fonts/HurmeGeometricSans1-Black.otf);
+
+@font-face {
+    font-family: 'HurmeGeometricSans';
+    src: url('/assets/fonts/HurmeGeometricSans1-Black.otf') format('opentype');
+}
+
+:root {
+    --font-family-primary: 'HurmeGeometricSans';
+}
+
+body {
+    font-family: var(--font-family-primary);
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -23,7 +38,6 @@
 }
 
 body {
-    font-family: "Poppins", sans-serif;
     min-height: 100vh; /* Permite que o body cresça conforme o conteúdo */
     background-image: url(/assets/others/background.jpg);
     background-size: cover;
@@ -167,20 +181,18 @@ main {
 
 .dilution-input {
     position: absolute;
-    top: 40%; /* Ajusta a posição vertical */
-    left: 37.2%; /* Ajusta a posição horizontal */
+    top: 57.6%; /* Ajusta a posição vertical */
+    left: 42.2%; /* Ajusta a posição horizontal */
     transform: translate(-50%, -50%);
-    font-family: 'Quicksand';
-    font-size: 20px;
-    font-weight: bold;
-    width: 13.6%;
-    height: 48%;
+    font-family: var(--font-family-primary);
+    width: 3%;
+    height: 9%;
     padding: 5px;
     border: none;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     animation: fadeIn 3s ease-in-out forwards;
     resize: none;
     outline: none;
@@ -190,6 +202,7 @@ main {
 .dilution-input::placeholder{
     color: rgb(97, 97, 97);
     text-align: center;
+    font-size: 10px;
 }
 
 .finalidade-input {
@@ -282,19 +295,67 @@ main {
     justify-content: center;
 }
 
-#consultor-tecnico{
-    width: 100%;
-    text-align: center;
+.empresa{
+    box-sizing: border-box;
     border: none;
-    border-radius: 10px;
+    text-align: left;
     padding: 10px 20px;
     background-color: #e0d8d8;
     margin-top: 5px;
     margin-bottom: 10px;
     border: 2px solid rgb(10, 93, 167);
     outline: none;
-
+    text-align: center;
+    border-radius: 4px;
+    
 }
+
+.image-upload {
+    position: relative;
+    display: inline-block;
+  }
+
+.tooltip {
+    visibility: hidden; /* Oculta o texto por padrão */
+    background-color: rgba(1, 1, 1, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    width: 90%;
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .image-upload:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+#consultor-tecnico{
+   
+    box-sizing: border-box;
+    border: none;
+    text-align: left;
+    width: 100%;
+    padding: 10px 55px;
+    background-color: #e0d8d8;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 2px solid rgb(10, 93, 167);
+    outline: none;
+    border-radius: 4px;
+}
+
+select:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
 
 hr {
     width: 100%;                 /* Define a largura */
