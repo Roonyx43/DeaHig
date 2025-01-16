@@ -150,6 +150,9 @@ document.getElementById("generate-pdf").addEventListener("click", async function
         case 'Elton Rohling':
             backgroundPath = '/assets/vendedores/11 - Elton Rohling.png';
             break;
+        case 'Josiel Soares':
+            backgroundPath = '/assets/vendedores/12 - Josiel soares.png';
+            break;
         default:
             // Se nenhum técnico for selecionado, usa o modelo padrão
             backgroundPath = '/assets/vendedores/modelo_background.png';

@@ -38,6 +38,7 @@
                     <option value="Cezar Petry">Cezar</option>
                     <option value="José Neto">Neto - CWB</option>
                     <option value="José Neto - FOZ">Neto - Foz</option>
+                    <option value="Josiel Soares">Josiel Soares</option>
                 </select>
             </div>
 
