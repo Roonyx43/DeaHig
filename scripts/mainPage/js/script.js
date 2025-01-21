@@ -1,4 +1,4 @@
-document.getElementById('adicionar-produto').addEventListener('click', function() {
+document.getElementById('adicionar-produto').addEventListener('click', function () {
     // Cria um novo contêiner para o campo de código do produto e diluição
     let div = document.createElement('div');
     div.classList.add('produto-item');
@@ -14,8 +14,25 @@ document.getElementById('adicionar-produto').addEventListener('click', function(
     document.getElementById('produto-container').appendChild(div);
 
     // Ação quando o código do produto for inserido
-    div.querySelector('.codigo-produto').addEventListener('input', function() {
+    div.querySelector('.codigo-produto').addEventListener('input', function () {
         let codigoProduto = this.value;
+
+        // Verifica se o código contém letras
+        const contemLetras = /[a-zA-Z]/.test(codigoProduto);
+
+        // Referência aos elementos da tela
+        const img = div.querySelector('.imagem-produto');
+        const dilucaoInput = div.querySelector('.dilution-input');
+        const finalidadeInput = div.querySelector('.finalidade-input');
+        const identInput = div.querySelector('.ident-input');
+
+        if (contemLetras) {
+            // Esconde o campo de finalidade e outros inputs
+            finalidadeInput.classList.add('hidden');
+        } else {
+            // Mostra os campos se não houver letras
+            finalidadeInput.classList.remove('hidden');
+        }
 
         // Fazer uma chamada Ajax para buscar o caminho da imagem no banco de dados
         fetch('/scripts/mainPage/php/buscar-imagem.php?codigo=' + codigoProduto)
@@ -23,28 +40,14 @@ document.getElementById('adicionar-produto').addEventListener('click', function(
             .then(data => {
                 if (data.sucesso) {
                     // Mostrar a imagem na tela
-                    let img = div.querySelector('.imagem-produto');
                     img.src = data.caminhoImagem;
                     img.classList.remove('hidden');
 
-                    // Mostrar os campos de diluição, finalidade e ID
-                    let dilucaoInput = div.querySelector('.dilution-input');
-                    dilucaoInput.classList.remove('hidden');
-                    let finalidadeInput = div.querySelector('.finalidade-input');
-                    finalidadeInput.classList.remove('hidden');
-                    let identInput = div.querySelector('.ident-input');
-                    identInput.classList.remove('hidden');
-
-                    // Adiciona o listener de cor aos campos de entrada
-                    [dilucaoInput, finalidadeInput, identInput].forEach(input => {
-                        input.addEventListener('input', () => {
-                            if (input.value.trim() !== '') {
-                                input.style.backgroundColor = 'transparent'; // Cor de fundo quando preenchido
-                            } else {
-                                input.style.backgroundColor = ''; // Volta ao fundo padrão
-                            }
-                        });
-                    });
+                    // Mostrar outros campos se o código não contém letras
+                    if (!contemLetras) {
+                        dilucaoInput.classList.remove('hidden');
+                        identInput.classList.remove('hidden');
+                    }
                 }
             })
             .catch(error => {
@@ -53,17 +56,6 @@ document.getElementById('adicionar-produto').addEventListener('click', function(
     });
 });
 
-// Função para remover o último produto adicionado
-document.getElementById('remover-ultimo-produto').addEventListener('click', function() {
-    const produtoContainer = document.getElementById('produto-container');
-    const ultimoProduto = produtoContainer.lastElementChild;
-
-    if (ultimoProduto) {
-        produtoContainer.removeChild(ultimoProduto);
-    } else {
-        alert("Nenhum produto para remover.");
-    }
-});
 
 document.getElementById("generate-pdf").addEventListener("click", async function () {
     const { PDFDocument, rgb } = PDFLib;
