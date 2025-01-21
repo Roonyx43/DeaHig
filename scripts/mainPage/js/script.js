@@ -7,7 +7,7 @@ document.getElementById('adicionar-produto').addEventListener('click', function 
         <div class="dilution-container">
             <img src="" alt="Imagem do Produto" class="imagem-produto hidden">
             <textarea class="dilution-input hidden" placeholder="" maxlength="3"></textarea>
-            <textarea class="finalidade-input hidden" placeholder="Digite a finalidade" maxlength="60"></textarea>
+            <textarea class="finalidade-input hidden" placeholder="Digite a finalidade" maxlength="50"></textarea>
             <textarea class="ident-input hidden" placeholder="ID" maxlength="2"></textarea>
         </div>
     `;
@@ -67,6 +67,18 @@ document.getElementById('adicionar-produto').addEventListener('click', function 
     });
 });
 
+
+// Função para remover o último produto adicionado
+document.getElementById('remover-ultimo-produto').addEventListener('click', function() {
+    const produtoContainer = document.getElementById('produto-container');
+    const ultimoProduto = produtoContainer.lastElementChild;
+
+    if (ultimoProduto) {
+        produtoContainer.removeChild(ultimoProduto);
+    } else {
+        alert("Nenhum produto para remover.");
+    }
+});
 
 document.getElementById("generate-pdf").addEventListener("click", async function () {
     const { PDFDocument, rgb } = PDFLib;
