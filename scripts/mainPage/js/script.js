@@ -7,7 +7,7 @@ document.getElementById('adicionar-produto').addEventListener('click', function 
         <div class="dilution-container">
             <img src="" alt="Imagem do Produto" class="imagem-produto hidden">
             <textarea class="dilution-input hidden" placeholder="" maxlength="3"></textarea>
-            <textarea class="finalidade-input hidden" placeholder="Digite a finalidade" maxlength="50"></textarea>
+            <textarea class="finalidade-input hidden" placeholder="Digite a finalidade" maxlength="60"></textarea>
             <textarea class="ident-input hidden" placeholder="ID" maxlength="2"></textarea>
         </div>
     `;
@@ -27,7 +27,7 @@ document.getElementById('adicionar-produto').addEventListener('click', function 
         const identInput = div.querySelector('.ident-input');
 
         if (contemLetras) {
-            // Esconde o campo de finalidade e outros inputs
+            // Esconde o campo de finalidade
             finalidadeInput.classList.add('hidden');
         } else {
             // Mostra os campos se não houver letras
@@ -48,6 +48,17 @@ document.getElementById('adicionar-produto').addEventListener('click', function 
                         dilucaoInput.classList.remove('hidden');
                         identInput.classList.remove('hidden');
                     }
+
+                    // Adiciona o listener de cor aos campos de entrada
+                    [dilucaoInput, finalidadeInput, identInput].forEach(input => {
+                        input.addEventListener('input', () => {
+                            if (input.value.trim() !== '') {
+                                input.style.backgroundColor = 'transparent'; // Cor de fundo quando preenchido
+                            } else {
+                                input.style.backgroundColor = ''; // Volta ao fundo padrão
+                            }
+                        });
+                    });
                 }
             })
             .catch(error => {
